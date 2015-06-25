@@ -10,8 +10,6 @@ var favicon = require('serve-favicon');
 var port = process.env.PORT || 8000;
 var app = express();
 var dbUrl = 'mongodb://127.0.0.1:27017/mean';
-//var dbUrl = 'mongodb://cassie:09230827@ds053080.mongolab.com:53080/rms';
-//var dbUrl = 'mongodb://4ftip62idt:koq83xf9b5@mongo.labs.taobao.net:27017/dtjr396c766hru403e40';
 mongoose.connect(dbUrl);
 app.set('views', './app/views/pages');
 app.set('view engine', 'jade');
