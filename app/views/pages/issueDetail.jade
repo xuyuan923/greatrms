@@ -1,0 +1,137 @@
+extends ../layout
+block content
+    .main-panel.container.col-sm-offset-4.col-md-8(style="margin-top:50px")
+        form.form-horizontal
+            h3.page-header 需求详情
+            .form-group
+                label.col-sm-2.control-label 所属业务线:
+                .col-sm-10
+                    label.control-label #{issue.belongLineId.name}
+            .form-group
+                label.col-sm-2.control-label 创建人:
+                .col-sm-10
+                    label.control-label #{issue.creator.name}
+            .form-group
+                label.col-sm-2.control-label 需求成员:
+                .col-sm-10
+                    label.control-label
+                        if issue.members
+                            each member in issue.members
+                                span #{member.name}&nbsp;&nbsp;
+                        if (!issue.members.length)
+                            span 暂时没有成员认领此需求
+            .form-group
+                label.col-sm-2.control-label 最后更新时间:
+                .col-sm-10
+                    label.control-label #{moment(issue.meta.updateAt).format('YYYY-MM-DD')}
+            .form-group
+                label.col-sm-2.control-label 需求主题:
+                .col-sm-10
+                    label.control-label #{issue.title}
+            .form-group
+                label.col-sm-2.control-label 需求描述:
+                .col-sm-10
+                    label.control-label #{issue.desc}
+            .form-group
+                label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期:
+                .col-sm-5
+                    if issue.start
+                        label.control-label #{moment(issue.start).format('YYYY-MM-DD')}
+            .form-group
+                label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期:
+                .col-sm-5
+                    if issue.end
+                        label.control-label #{moment(issue.end).format('YYYY-MM-DD')}
+            .form-group
+                label.col-sm-2.control-label 需求状态:
+                .col-sm-5
+                    label.control-label
+                        if issue.condition == "0"
+                            code 需求分析中
+                        if issue.condition == "1"
+                            code PRD整理中
+                        if issue.condition == "2"
+                            code 原型设计中
+                        if issue.condition == "3"
+                            code 视觉稿设计中
+                        if issue.condition == "4"
+                            code demo制作中
+                        if issue.condition == "5"
+                            code 前后端联调中
+                        if issue.condition == "6"
+                            code 测试中
+                        if issue.condition == "7"
+                            code 发布
+            .form-group
+                label.col-sm-2.control-label 需求所需角色:
+                .col-sm-10
+                    label.control-label
+                        if issue.role.length
+                            each val in issue.role
+                                if val == "0"
+                                    code PD
+                                if val == "1"
+                                    code 交互
+                                if val == "2"
+                                    code 视觉
+                                if val == "3"
+                                    code 前端
+                                if val == "4"
+                                    code 开发
+                                if val == "5"
+                                    code 测试
+            .form-group
+                label.col-sm-2.control-label 已认领的角色:
+                .col-sm-10
+                    label.control-label
+                        if issue.allocatedRole.length
+                            each val in issue.allocatedRole
+                                if val == "0"
+                                    code PD
+                                if val == "1"
+                                    code 交互
+                                if val == "2"
+                                    code 视觉
+                                if val == "3"
+                                    code 前端
+                                if val == "4"
+                                    code 开发
+                                if val == "5"
+                                    code 测试
+                        else
+                            span 暂时没有已认领的角色
+            .form-group
+                label.col-sm-2.control-label 未认领的角色:
+                .col-sm-10
+                    label.control-label
+                        if(issue.unAllocatedRole.length !== 0)
+                            each val in issue.unAllocatedRole
+                                if val == "0"
+                                    code PD
+                                if val == "1"
+                                    code 交互
+                                if val == "2"
+                                    code 视觉
+                                if val == "3"
+                                    code 前端
+                                if val == "4"
+                                    code 开发
+                                if val == "5"
+                                    code 测试
+                        else
+                            span 所有角色都认领了需求
+            if(user._id === issue.creator._id.toString() || user.level === 100)
+                .form-group
+                    .col-sm-3.control-label
+                        a.postMsg.btn.btn-success(href="/admin/issue/update/#{issue._id}") 修改
+                    //.col-sm-10
+                    //    .control-label
+                    //    button.btn.btn-danger.del.btn-xs(type="button",data-id="#{issue._id}") 删除
+            - for(var i=0;i<issue.members.length;i++)
+                if(user._id === issue.members[i]._id.toString() && user._id !== issue.creator._id.toString())
+                    .form-group
+                        .col-sm-4.control-label(style="margin-left:-100px")
+                            a.btn.btn-success(href="/admin/issue/update/#{issue._id}") 修改
+    script(src="/js/admin.js")
+
+

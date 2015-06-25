@@ -1,0 +1,105 @@
+//我认领的需求
+extends ../layout
+block content
+    .row.container.col-sm-offset-2.col-md-9(style="margin-top:75px;margin-left:230px")
+        .tabbable.view
+            ul.nav.nav-tabs
+                li.active
+                    a(href="#panel-1",data-toggle="tab") 我认领的
+                li
+                    a(href="#panel-2",data-toggle="tab") 未认领的
+                        span.badge
+            .tab-content(style="margin-top:10px")
+                .tab-pane.active(id="panel-1")
+                    button.btn.btn-primary.show-list
+                        span.glyphicon.glyphicon-list-alt 列表显示
+                    button.btn.btn-default.show-calendar
+                        span.glyphicon.glyphicon-calendar 日历显示
+                    table.allocatedList.table.table-hover.table-bordered(style="margin-top:10px")
+                        thead
+                            tr
+                                th 所属业务线
+                                th 需求主题
+                                th 需求状态
+                                th 提醒
+                                th 查看详情
+                                th 修改
+                        tbody
+                        each issue in issues
+                            tr(class="issue-id-#{issue._id}")
+                                td
+                                    a(href="/line/#{issue.belongLineId._id}",style="color:#333;") #{issue.belongLineId.name}
+                                td #{issue.title}
+                                td
+                                    if issue.condition == "0"
+                                        code 需求分析中
+                                    if issue.condition == "1"
+                                        code PRD整理中
+                                    if issue.condition == "2"
+                                        code 原型设计中
+                                    if issue.condition == "3"
+                                        code 视觉稿设计中
+                                    if issue.condition == "4"
+                                        code demo制作中
+                                    if issue.condition == "5"
+                                        code 前后端联调中
+                                    if issue.condition == "6"
+                                        code 测试中
+                                    if issue.condition == "7"
+                                        code 发布
+                                td
+                                    if(issue.unAllocatedRole.length !== 0)
+                                        each val in issue.unAllocatedRole
+                                            if val == "0"
+                                                span PD未认领,&nbsp;
+                                            if val == "1"
+                                                span 交互未认领,&nbsp;
+                                            if val == "2"
+                                                span 视觉未认领,&nbsp;
+                                            if val == "3"
+                                                span 前端未认领,&nbsp;
+                                            if val == "4"
+                                                span 开发未认领,&nbsp;
+                                            if val == "5"
+                                                span 测试未认领
+                                    else
+                                        span 所有角色均认领了需求
+                                td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
+                                td: a.btn.btn-success.btn-xs(href="/admin/issue/update/#{issue._id}") 修改
+                    #calendar-allocated.calendar(style="display:none;margin-top:10px")
+                .tab-pane(id="panel-2")
+                    iframe(src="/admin/line/list/myIssueUnallocated",frameborder="0",style="width:100%;min-height:1000px")
+            //分页
+            nav
+                ul.pagination
+                    li
+                        a(href="/?p=0")
+                            span(aria-hidden="true") &laquo;
+                            span.sr-only Previous
+                    - for (var i = 0; i < ((totalPage > 5) ? 5 : totalPage); i++){
+                        if (currentPage == (i+1))
+                                li.active
+                                    span #{currentPage}
+                            else
+                                li
+                                    a(href="/?p=#{i}") #{i+1}
+                    - }
+                    if(totalPage>5)
+                        li
+                            a ...
+                    li
+                        a(href="/?p=#{totalPage-1}")
+                            span(aria-hidden="true") &raquo;
+                            span.sr-only Next
+    link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
+    script(src="/libs/fullcalendar/moment.min.js")
+    script(src="/libs/fullcalendar/fullcalendar.min.js")
+    script(src="/js/fullcalendar.js")
+    script(src="/libs/fullcalendar/zh-cn.js")
+
+
+
+
+
+
+

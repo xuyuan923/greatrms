@@ -1,0 +1,36 @@
+//业务线-资源占用
+extends ../layout
+block content
+    .container.content-panel
+        .row.col-sm-offset-1.col-md-9
+            .col-sm-10(style="margin-top:30px")
+                label.col-sm-4.text-right(style="height:34px;line-height:34px") 输入业务线名称关键词
+                label.col-sm-7
+                    input.form-control.line-name-input(type="text",value)
+                    div#related-line.col-sm-7.form-control(style="height:auto;display:none")
+            .col-sm-10#select-role(style="display:none")
+                label.col-sm-4.text-right(style="height:34px;line-height:34px") 选择角色
+                label.col-sm-8
+                    .btn-group
+                        button.filterRole.btn.btn-default(type="text",value="0",name="roleId") PD
+                        button.filterRole.btn.btn-default(type="text",value="1",name="roleId") 交互
+                        button.filterRole.btn.btn-default(type="text",value="2",name="roleId") 视觉
+                        button.filterRole.btn.btn-default(type="text",value="3",name="roleId") 前端
+                        button.filterRole.btn.btn-default(type="text",value="4",name="roleId") 开发
+                        button.filterRole.btn.btn-default(type="text",value="5",name="roleId") 测试
+            .col-sm-10#select-member(style="display:none")
+                label.col-sm-4.text-right(style="height:34px;line-height:34px") 选择个人
+                label.col-sm-7
+                    .btn-group
+            .col-sm-10
+                div#currentOption
+                    label.col-sm-4.text-right 所有分类
+                    i.toright
+        .row.container.col-sm-offset-1.col-md-9(style="margin-top:30px")
+            #calendar(style="margin-top:10px")
+    link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
+    link(href="/css/lineRole.css",rel="stylesheet")
+    script(src="/libs/fullcalendar/moment.min.js")
+    script(src="/libs/fullcalendar/fullcalendar.min.js")
+    script(src="/libs/fullcalendar/zh-cn.js")
+    script(src="/js/lineRole.js")

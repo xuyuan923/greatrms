@@ -1,0 +1,28 @@
+extends ../layout
+block content
+    .content-panel.container
+        .row
+            ul.line-ul
+                if (!lines.length)
+                    div.col-sm-10.col-sm-offset-1.alert.alert-warning(role="alert",style="margin-top: 30px;") 您还未加入任何业务线，请联系产品经理把您加入业务线。
+                if lines.length
+                    each item in lines
+                        li.line-ul-li(class="item-id-#{item._id}")
+                            .wrapper
+                                p.title
+                                    span.name #{item.name}
+                                    span.date #{moment(item.meta.updateAt).format('YYYY/MM/DD')}
+                                p.intro #{item.desc}
+                                p.visit
+                                    span
+                                        a.btn.btn-default(href="/line/#{item._id}")
+                                            i.find-detail
+                                            查看
+                                    span
+                                        button.btn.btn-default.exit(type="button",data-id="#{item._id}")
+                                            i.btn-exit
+                                            退出
+    link(href="/css/sweet-alert.css",rel="stylesheet")
+    link(href="/css/myLine.css",rel="stylesheet")
+    script(src="/js/sweet-alert.js")
+    script(src="/js/exit.js")

@@ -1,0 +1,64 @@
+extends ../layout
+block content
+    .content-panel.container(style="padding-top:75px")
+        .panel.panel-default
+            .panel-heading 所有需求列表
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th 所属业务线
+                        th 需求主题
+                        th 需求描述
+                        th 开始日期
+                        th 结束日期
+                        th 需求状态
+                        th 需求所需角色
+                        th 查看
+                        th 更新
+                        th 删除
+                tbody
+                each issue in issues
+                    tr(class="issue-id-#{issue._id}")
+                        td #{issue.belongLineId.name}
+                        td #{issue.title}
+                        td #{issue.desc}
+                        td #{moment(issue.start).format('YYYY-MM-DD')}
+                        td #{moment(issue.end).format('YYYY-MM-DD')}
+                        td
+                            if issue.condition == "0"
+                                code 需求分析中
+                            if issue.condition == "1"
+                                code PRD整理中
+                            if issue.condition == "2"
+                                code 原型设计中
+                            if issue.condition == "3"
+                                code 视觉稿设计中
+                            if issue.condition == "4"
+                                code demo制作中
+                            if issue.condition == "5"
+                                code 前后端联调中
+                            if issue.condition == "6"
+                                code 测试中
+                            if issue.condition == "7"
+                                code 发布
+                        td
+                            each val in issue.role
+                                if val == "0"
+                                    code PD
+                                if val == "1"
+                                    code 交互
+                                if val == "2"
+                                    code 视觉
+                                if val == "3"
+                                    code 前端
+                                if val == "4"
+                                    code 开发
+                                if val == "5"
+                                    code 测试
+                        td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
+                        td: a.btn.btn-success.btn-xs(href="/admin/issue/update/#{issue._id}") 修改
+                        td
+                            button.btn.btn-danger.del.btn-xs(type="button",data-id="#{issue._id}") 删除
+    link(href="/css/sweet-alert.css",rel="stylesheet")
+    script(src="/js/sweet-alert.js")
+    script(src="/js/delIssue.js")

@@ -1,0 +1,35 @@
+extends ../layout
+block content
+    .content-panel.container(style="padding-top:75px")
+        .panel.panel-default
+            .panel-heading 注册用户信息
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th 注册时间
+                        th 登录名
+                        th 角色
+                        th 删除
+                tbody
+                each item in users
+                    tr(class="item-id-#{item._id}")
+                        td #{moment(item.meta.updateAt).format('YYYY-MM-DD HH:mm:ss')}
+                        td #{item.name}
+                        td
+                            if(item.role == '0')
+                                code 产品经理
+                            if(item.role == '1')
+                                code 交互设计师
+                            if(item.role == '2')
+                                code 视觉设计师
+                            if(item.role == '3')
+                                code 前端开发工程师
+                            if(item.role == '4')
+                                code 开发工程师
+                            if(item.role == '5')
+                                code 测试工程师
+                        td
+                            button.btn.btn-danger.del.btn-xs(type="button",data-id="#{item._id}") 删除
+    link(href="/css/sweet-alert.css",rel="stylesheet")
+    script(src="/js/sweet-alert.js")
+    script(src="/js/deluser.js")

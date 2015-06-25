@@ -1,0 +1,116 @@
+//业务线-需求列表
+extends ../layout
+
+block content
+    .container.col-sm-offset-2.col-md-9
+        .row(style="margin-top:75px")
+            form.form-inline(role="form",method="GET",action="/admin/all/issue/line")
+                label.col-sm-3.col-sm-offset-1.control-label.text-right(style="height:34px;line-height:34px") 输入业务线名称关键词
+                .col-sm-8
+                    input.form-control(style="width:400px",type="text",name="q")
+                    button.btn.btn-default(type="submit") 搜索
+    .row.container.col-sm-offset-2.col-md-9(style="margin-top:30px;margin-left:230px;")
+        .tabbable.view
+            ul.nav.nav-tabs
+                li.list.active
+                    a(href="#panel-1",data-toggle="tab") 列表显示
+                li.calendar
+                    a(href="#panel-2",data-toggle="tab") 日历显示
+            .tab-content(style="margin-top:10px")
+                .tab-pane.active(id="panel-1")
+                    table#data-table.allocatedList.table.table-hover.table-bordered.display(style="margin-top:10px;width:100%;cellspacing:0")
+                        thead
+                            tr
+                                th 所属业务线
+                                th 需求主题
+                                th 需求状态
+                                th 提醒
+                                th 查看详情
+                        tbody
+                        each issue in issues
+                            tr(class="issue-id-#{issue._id}")
+                                td
+                                    a(href="/line/#{issue.belongLineId._id}",style="color:#333;") #{issue.belongLineId.name}
+                                td #{issue.title}
+                                td
+                                    if issue.condition == "0"
+                                        code 需求分析中
+                                    if issue.condition == "1"
+                                        code PRD整理中
+                                    if issue.condition == "2"
+                                        code 原型设计中
+                                    if issue.condition == "3"
+                                        code 视觉稿设计中
+                                    if issue.condition == "4"
+                                        code demo制作中
+                                    if issue.condition == "5"
+                                        code 前后端联调中
+                                    if issue.condition == "6"
+                                        code 测试中
+                                    if issue.condition == "7"
+                                        code 发布
+                                td
+                                    if(issue.unAllocatedRole.length)
+                                        each val in issue.unAllocatedRole
+                                            if val == "0"
+                                                span PD未认领,&nbsp;
+                                            if val == "1"
+                                                span 交互未认领,&nbsp;
+                                            if val == "2"
+                                                span 视觉未认领,&nbsp;
+                                            if val == "3"
+                                                span 前端未认领,&nbsp;
+                                            if val == "4"
+                                                span 开发未认领,&nbsp;
+                                            if val == "5"
+                                                span 测试未认领
+                                    else
+                                        span 所有角色均认领了需求
+                                td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
+                    //下载excel表单数据
+                    .span12
+                        a#btnExport(href="#",download="") 下载数据到本地
+                    //分页
+                    .span12
+                        ul.pagination
+                            li
+                                if q
+                                    a(href="/admin/all/issue/line?q=#{q}&?p=0")
+                                        span(aria-hidden="true") &laquo;
+                                        span.sr-only Previous
+                                else
+                                    a(href="/admin/all/issue/line?p=0")
+                                        span(aria-hidden="true") &laquo;
+                                        span.sr-only Previous
+                            - for (var i = 0; i < ((totalPage > 5) ? 5 : totalPage); i++){
+                                if (currentPage == (i+1))
+                                    li.active
+                                        span #{currentPage}
+                                else
+                                    li
+                                        if q
+                                            a(href="/admin/all/issue/line?q=#{q}&?p=#{i}") #{i+1}
+                                        else
+                                            a(href="/admin/all/issue/line?p=#{i}") #{i+1}
+                                - }
+                            if(totalPage>5)
+                                li
+                                    a ...
+                            li
+                                if q
+                                    a(href="/admin/all/issue/line?q=#{q}&?p=#{totalPage-1}")
+                                        span(aria-hidden="true") &raquo;
+                                        span.sr-only Next
+                                else
+                                    a(href="/admin/all/issue/line?p=#{totalPage - 1}")
+                                        span(aria-hidden="true") &raquo;
+                                        span.sr-only Next
+                .tab-pane.active(id="panel-2",style="display:none")
+                    #calendar(style="margin-top:10px;")
+    link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
+    script(src="/libs/fullcalendar/moment.min.js")
+    script(src="/libs/fullcalendar/fullcalendar.min.js")
+    script(src="/libs/fullcalendar/zh-cn.js")
+    script(src="/js/jquery.battatech.excelexport.js")
+    script(src="/js/allIssueCalendar.js")
+

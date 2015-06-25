@@ -1,0 +1,25 @@
+extends ../layout
+block content
+    .content-panel.container(style="padding-top:75px")
+        .panel.panel-default
+            .panel-heading 所有业务线列表
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th 业务名称
+                        th 业务描述
+                        th 查看
+                        th 更新
+                        th 删除
+                    tbody
+                each item in lines
+                    tr(class="item-id-#{item._id}")
+                        td #{item.name}
+                        td #{item.desc}
+                        td: a.btn.btn-info.btn-xs(href="../../line/#{item._id}") 查看
+                        td: a.btn.btn-success.btn-xs(href="../line/update/#{item._id}") 修改
+                        td
+                            button.btn.btn-danger.del.btn-xs(type="button",data-id="#{item._id}") 删除
+    link(href="/css/sweet-alert.css",rel="stylesheet")
+    script(src="/js/sweet-alert.js")
+    script(src="/js/admin.js")

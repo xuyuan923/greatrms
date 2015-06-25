@@ -1,0 +1,26 @@
+extends ../layout
+block content
+    .container.content-panel
+        .row
+            .col-md-5
+                form(method="POST", action="/user/signup")
+                    .modal-body
+                        h3.page-header 注册
+                        .form-group
+                            label(for="signupName") 用户名
+                            input#signupName.form-control(name="user[name]",type="text")
+                        .form-group
+                            label(for="signupPassword") 密码
+                            input#signupPassword.form-control(name="user[password]",type="password")
+                        .form-group
+                            label 我的职业
+                            select(name="user[role]").form-control
+                                option(value="0") 产品经理
+                                option(value="1") 交互设计师
+                                option(value="2") 视觉设计师
+                                option(value="3") 前端开发工程师
+                                option(value="4") 研发工程师
+                                option(value="5") 测试工程师
+                    .modal-footer
+                        button.btn.btn-default(type="button",data-dismiss="modal") 关闭
+                        button.btn.btn-success(type="submit") 提交

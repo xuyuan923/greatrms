@@ -1,0 +1,46 @@
+link(href="/libs/bootstrap/dist/css/bootstrap.min.css",rel="stylesheet")
+link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
+script(src="/libs/jquery/dist/jquery.min.js")
+script(src="/libs/fullcalendar/moment.min.js")
+script(src="/libs/fullcalendar/fullcalendar.min.js")
+script(src="/js/fullcalendar.js")
+script(src="/libs/fullcalendar/zh-cn.js")
+script(src="/js/allocate.js")
+body(style="background-color:#f9f9f7")
+    button.btn.btn-primary.show-list
+        span.glyphicon.glyphicon-list-alt(style="height:20px;line-height:16px;") 列表显示
+    button.btn.btn-default.show-calendar
+        span.glyphicon.glyphicon-calendar(style="height:20px;line-height:16px;") 日历显示
+    table.table.table-hover.table-bordered.allocatedList(style="display:block;margin-top:10px")
+        thead
+            tr
+                th 所属业务线
+                th 需求主题
+                th 需求状态
+                th 查看详情
+                th 认领
+        tbody
+            each issue in issues
+                tr(class="issue-id-#{issue._id}")
+                    td #{issue.belongLineId.name}
+                    td #{issue.title}
+                    td
+                        if issue.condition == "0"
+                            code 需求分析中
+                        if issue.condition == "1"
+                            code PRD整理中
+                        if issue.condition == "2"
+                            code 原型设计中
+                        if issue.condition == "3"
+                            code 视觉稿设计中
+                        if issue.condition == "4"
+                            code demo制作中
+                        if issue.condition == "5"
+                            code 前后端联调中
+                        if issue.condition == "6"
+                            code 测试中
+                        if issue.condition == "7"
+                            code 发布
+                    td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
+                    td: button.btn.btn-danger.btn-xs.allocate(type="button",data-id="#{issue._id}") 认领
+    #calendar-unAllocated.calendar(style="display:none;margin-top:10px")

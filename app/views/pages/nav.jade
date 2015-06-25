@@ -1,0 +1,26 @@
+#leftBar
+    div.left_menu_top
+        ul.left_menu_module
+            li
+                a(href="/",class="#{activeNav('/')}")
+                    i.glyphicon.glyphicon-dashboard
+                    span 我的任务
+            li
+                a(href="/admin/line/my",class="#{activeNav('/admin/line/my')}")
+                    i.glyphicon.glyphicon-user
+                    span 我的业务线
+            li
+                a(href="/admin/all/issue/line",class="#{activeNav('/admin/all/issue/line')}")
+                    i.glyphicon.glyphicon-eye-open
+                    span 发现
+            li.occupy
+                a(href="javascript:void(0)")
+                    i.glyphicon.glyphicon-list
+                    span 资源占用
+                    i.downmenu
+                if user
+                    ul.line-list-left
+                        li
+                            a(href="/admin/line/role",class="#{activeNav('/admin/line/role')}")
+                                i.more
+                                span 更多

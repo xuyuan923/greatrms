@@ -1,0 +1,54 @@
+{
+  "name": "greatrms",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^0.8.0",
+    "body-parser": "~1.0.0",
+    "connect-mongo": "^0.4.1",
+    "cookie-parser": "^1.0.1",
+    "crypto": "0.0.3",
+    "debug": "~0.7.4",
+    "express": "~4.2.0",
+    "express-session": "^1.9.1",
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-nodemon": "^0.3.0",
+    "jade": "~1.3.0",
+    "mocha": "^2.1.0",
+    "moment": "*",
+    "mongodb": "*",
+    "mongoose": "^3.8.2",
+    "morgan": "^1.0.1",
+    "serve-favicon": "^2.2.0",
+    "should": "^5.0.0",
+    "static-favicon": "~1.0.0",
+    "underscore": "*",
+    "excel-export": "~0.3.11"
+  },
+  "description": "- 基于Nodejs + Express + Mongodb + Mongoose构建 - 项目结构采用[MEAN](http://meanjs.org/)架构 - 线上地址[https://greatrms.herokuapp.com/](https://greatrms.herokuapp.com/)",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xuyuan923/mean.git"
+  },
+  "author": "xuyuan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xuyuan923/mean/issues"
+  },
+  "homepage": "https://github.com/xuyuan923/mean",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "rms"
+  ]
+}

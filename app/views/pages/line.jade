@@ -1,0 +1,38 @@
+extends ../layout
+block content
+    .container.col-md-offset-3.col-md-8(style="margin-top:50px")
+        form.form-horizontal(id="defaultForm",role="form",method="post",action="/admin/line")
+            h3.page-header #{title}
+            input(type="hidden",name="line[_id]",value="#{line._id}")
+            input(type="hidden",name="line[creator]",value="#{line.creator}")
+            .form-group
+                label.col-sm-2.control-label(for="inputTitle") 业务名称
+                .col-sm-10
+                    input.form-control(type="text",name="line[name]",value="#{line.name}")
+            .form-group
+                label.col-sm-2.control-label(for="inputDesc") 业务描述
+                .col-sm-10
+                     input.form-control(type="text",name="line[desc]",value="#{line.desc}")
+            .form-group
+                label.col-sm-2.control-label 业务成员
+                div#added-member.col-sm-10
+                    each user in users
+                        if line._id
+                            - for (var i=0;i<line.members.length;i++)
+                                if line.members[i]
+                                    if ((line.members[i]).toString() === (user._id).toString())
+                                        label.role-select
+                                            input(type="checkbox",name="line[members]",value="#{user._id}",checked)
+                                            span(style="margin-left:5px") #{user.name}
+                .col-sm-10.wrapper
+                    label.col-sm-3(style="height:34px;line-height:34px;padding-left:0") 输入花名添加新成员
+                    label.col-sm-5
+                        input.form-control.new-member-input(type="text",value)
+                        div#relatedMember.col-sm-5.form-control(style="height:auto;display:none")
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.postMsg.btn.btn-default(type="submit") 保存
+    link(href="/css/sweet-alert.css",rel="stylesheet")
+    script(src="/js/sweet-alert.js")
+    script(src="/libs/bootstrap/dist/js/bootstrapValidator.js")
+    script(src="/js/addNewMember.js")

@@ -1,0 +1,36 @@
+extends ../layout
+block content
+    .content-panel.container
+        .row
+            .col-md-6.col-md-offset-2
+                h3.page-header 业务线详情
+                dl.dl-horizontal
+                    dt 业务名称:
+                    dd #{line.name}
+                    dt 创建时间:
+                    dd #{moment(line.meta.updateAt).format('YYYY-MM-DD')}
+                    dt 创建人:
+                    dd #{line.creator.name}
+                    dt 业务介绍:
+                    dd #{line.desc}
+                    dt 已创建的需求:
+                    dd
+                        if line.issues
+                            each issue in line.issues
+                                p(style="margin:0")
+                                    a(href="/issue/#{issue._id}") #{issue.title}
+                        else
+                            p 该业务线上还未创建任何需求
+                    dt 业务成员:
+                    dd
+                        if line.members
+                            each member in line.members
+                                span #{member.name}&nbsp;&nbsp;
+                    if(user._id === line.creator._id.toString() || user.level === 100)
+                        dd
+                            a.btn.btn-success(href="/admin/line/update/#{line._id}") 修改
+                        //dd
+                        //    button.btn.btn-danger.del.btn-xs(type="button",data-id="#{line._id}") 删除
+
+
+
